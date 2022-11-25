@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script type="text/javascript">
+        window.onload = function(){
+            var session = sessionStorage.getItem("session");
+            console.log(session)
+            a = document.getElementsByTagName('a')
+            console.log(a)
+            for(i=0; i < a.length; ++i)
+            {
+                url = a[i].href;
+                a[i].href = url + session;
+            }
+        }
+    </script>
+</head>
+<body>
+    <p style="text-align: center;">数据库系统引导页面</p>
+    <div>
+        <ul style="margin: 0;padding: 0;list-style-type: none;text-align: center;">
+            {% if auth == 'admin' %}
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href='/management/insert/member/'>录入职工</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/insert/club/">录入社团</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/alter/member/">修改职工</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/alter/club/">修改社团</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/delete/member/">删除职工</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/delete/club/">删除社团</a>
+            </li>
+            {% elif auth == 'principal' %}
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/confirm/">确认社团成员入团</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/organize/">组织活动</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/clubInfo/join/">查询社团申请</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/clubInfo/activity/">查询社团活动</a>
+            </li>
+            {% elif auth == 'normal' %}
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/signup/">报名社团</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/attend/">参加活动</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/memberInfo/join/">查询社团申请</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/memberInfo/attend/">查询社团活动</a>
+            </li>
+            {% endif %}
+        </ul>
+        
+    </div>
+</body>
+</html>

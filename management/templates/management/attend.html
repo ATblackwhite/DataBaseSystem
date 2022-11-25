@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>参加活动</title>
+</head>
+<body>
+    <div>
+        {% for activity in activityList %}
+            {% if activity.maxNumber > activity.memberNumber %}
+        <form name="form" style="text-align: center;" >
+            <label>编码</label><input id="activityNumber{{forloop.counter}}" type="text" value="{{activity.number}}" disabled="true" style="width: 45px;" />
+            <label>活动名</label><input id="activityName{{forloop.counter}}" type="text" value="{{activity.name}}" disabled="true"  style="width: 45px;"/>
+            <label>社团</label><input id="club{{forloop.counter}}" type="text" value="{{activity.club.name}}" disabled="true"  style="width: 45px;" />
+            <label>负责人</label><input id="principal{{forloop.counter}}" type="text" value="{{activity.principal.name}}" disabled="true"  style="width: 45px;" />
+            <label>地点</label><input id="location{{forloop.counter}}" type="text" value="{{activity.location}}" disabled="true" style="width: 50px;" />
+            <label>时间</label><input id="dateTime{{forloop.counter}}" type="text" value="{{activity.dateTime}}" disabled="true"  style="width: 150px;" />
+            <label>报名人数</label><input id="memberNumber{{forloop.counter}}" type="text" value="{{activity.memberNumber}}" disabled="true"  style="width: 25px;" />
+            <label>最大人数</label><input id="maxNumber{{forloop.counter}}" type="text" value="{{activity.maxNumber}}" disabled="true"  style="width: 25px;" />
+            <input type="button" value="报名" onclick="myFunction({
+                'activityNumber': document.getElementById('activityNumber{{forloop.counter}}').value
+            })" /> 
+        </form>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <script>
+        function myFunction(data) {
+            url = "http://127.0.0.1:8000/management/attendActivity/";
+            data.session = sessionStorage.getItem('session');
+            console.log(data);
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(myJson){
+                alert(myJson.message);
+                if(myJson.code == 200)
+                    location.reload();
+            })
+        }
+    </script>
+
+</body>
+</html>

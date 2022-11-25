@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>确认社团成员入团</title>
+</head>
+<body>
+    <div>
+        {% for join in joinList %}
+        <form style="text-align: center;">
+            <label>职工号</label><input id="memberNumber{{forloop.counter}}" type="text" name="memberNumber"  disabled="true" value="{{join.member.memberNumber}}"/>
+            <label>名字</label><input id="name{{forloop.counter}}" type="text" name="name" value="{{join.member.name}}" disabled="true"/>
+            <label>申请日期</label><input id="date{{forloop.counter}}" type="text" name="date" value="{{join.attendDate}}" disabled="true"/> 
+            <input type="button" value="确定" onclick="confirm({
+                'memberNumber': document.getElementById('memberNumber{{forloop.counter}}').value
+            })"/>
+            <input type="button" value="取消" onclick="cancel({
+                'memberNumber': document.getElementById('memberNumber{{forloop.counter}}').value
+            })"/>
+        </form>
+        {% empty %}
+        <p>没有待确认的成员申请</p>
+        {% endfor %}
+    </div>
+    <script>
+        function confirm(data) {
+            url = "http://127.0.0.1:8000/management/confirmJoin/";
+            data.session = sessionStorage.getItem('session');
+            console.log(data)
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(myJson){
+                alert(myJson.message);
+                if(myJson.code == 200)
+                    location.reload();
+            })
+        }
+        function cancel(data) {
+            url = "http://127.0.0.1:8000/management/cancelJoin/";
+            data.session = sessionStorage.getItem('session');
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(myJson){
+                alert(myJson.message);
+                if(myJson.code == 200)
+                    location.reload();
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>组织活动</title>
+</head>
+<body>
+    <div>
+        <form name="form" style="text-align: center;" >
+            <label>活动编号</label><input type="text" name="activityNumber"/><br/>
+            <label>活动名</label><input type="text" name="acticityName"/><br/>
+            <label>社团名</label><input type="text" name="clubName" disabled="true" value="{{club.name}}" /><br/>
+            <label>负责人</label><input type="text" name="principalName" disabled="true" value="{{member.name}}" /><br/>
+            <label>活动地点</label><input type="text" name="activityLocation"/><br/>
+            <label>活动时间</label><input type="datetime-local" name="dateTime"/><br/>
+            <label>活动人数</label><input type="number" name="maxNumber"/><br/>
+            <input type="button" value="提交" onclick="myFunction({
+                'activityNumber': document.form.activityNumber.value,
+                'activityName': document.form.acticityName.value,
+                'clubName': document.form.clubName.value,
+                'principalName': document.form.principalName.value,
+                'activityLocation': document.form.activityLocation.value,
+                'dateTime': document.form.dateTime.value,
+                'maxNumber': document.form.maxNumber.value,
+            })"/>
+        </form>
+    </div>
+    <script>
+        function myFunction(data) {
+            url = "http://127.0.0.1:8000/management/publish/";
+            console.log(data);
+            data.session = sessionStorage.getItem('session');
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(myJson){
+                console.log(myJson);
+                alert(myJson.message);
+                if(myJson.code == 200)
+                    location.reload();
+            })
+        }
+    </script>
+</body>
+</html>

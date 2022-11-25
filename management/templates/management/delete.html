@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>删除{{model}}</title>
+    <script type="text/javascript">
+        window.onload = function(){
+            var session = sessionStorage.getItem("session");
+            console.log(session)
+            a = document.getElementsByTagName('a')
+            console.log(a)
+            for(i=0; i < a.length; ++i)
+            {
+                url = a[i].href;
+                a[i].href = url + session;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <ul style="margin: 0;padding: 0;list-style-type: none;text-align: center;">
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/insert/member/">录入职工</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/insert/club/">录入社团</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/alter/member/">修改职工</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/alter/club/">修改社团</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/delete/member/">删除职工</a>
+            </li>
+            <li style="width: 100px;left: 50px;display: inline;padding: 8px 16px;">
+                <a href="/management/delete/club/">删除社团</a>
+            </li>
+        </ul>
+    </div>
+{% if model == 'member' %}
+    <div>
+        {% for member in memberList %}
+        <form style="text-align: center;">
+            <label>职工号</label><input id="memberNumber{{forloop.counter}}" type="text" name="memberNumber"  disabled="true" value="{{member.memberNumber}}"/>
+            <label>名字</label><input id="name{{forloop.counter}}" type="text" name="name"  value="{{member.name}}" disabled="true"/>
+            <label>年龄</label><input id="age{{forloop.counter}}" type="text" name="age"  value="{{member.age}}" disabled="true"/>
+            <label>性别</label><input id="sex{{forloop.counter}}" type="text" name="sex" value="{{member.sex}}" disabled="true"/>
+            <input type="button" value="删除" onclick="myFunction('deleteMember/', {
+                'memberNumber': document.getElementById('memberNumber{{forloop.counter}}').value
+            })"><br>
+        </form>
+        {% empty %}
+        <li>sorry, no member in database.</li>
+        {% endfor %}
+    </div>
+{% elif model == 'club' %}
+    <div>
+        {% for club in clubList %}
+        <form style="text-align: center;">
+            <label>社团号</label><input id="clubNumber{{forloop.counter}}" type="text" name="clubNumber"  disabled="true" value="{{club.clubNumber}}"/>
+            <label>名字</label><input id="name{{forloop.counter}}" type="text" name="name"  value="{{club.name}}" disabled="true"/>
+            <label>负责人号码</label><input id="principal{{forloop.counter}}" type="text" name="principal"  value="{{club.principal.memberNumber}}" disabled="true"/>
+            <input type="button" value="删除" onclick="myFunction('deleteClub', {
+                'clubNumber': document.getElementById('clubNumber{{forloop.counter}}').value
+            })"><br>
+        </form>
+        {% empty %}
+        <li>sorry, no club in database.</li>
+        {% endfor %}
+    </div>
+{% endif %}
+<script>
+    function myFunction(model, data){
+        url = "http://127.0.0.1:8000/management/"+model;
+        console.log(data);
+        data.session = sessionStorage.getItem("session");
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response){
+                return response.json();
+        })
+        .then(function(myJson){
+            console.log(myJson);
+            if(myJson.code == "200")
+            {
+                alert("Success");
+                location.reload();
+            }
+            else if(myJson.code == 401)
+            {
+                alert("请先登录");
+                location = "http://127.0.0.1:8000/management/login/"
+            }
+            else 
+                alert("Error");
+        })
+    }
+</script>
+</body>
+</html>
