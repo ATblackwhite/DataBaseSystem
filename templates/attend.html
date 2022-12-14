@@ -1,0 +1,51 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load static %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+确认社团申请
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<div class="container"  xmlns="http://www.w3.org/1999/html">
+    <div class="row">
+        <p class="col-12 mt-4 mb-4">
+            <a>用户：{{ member.name }}</a>
+        </p>
+    </div>
+    <div class="container">
+        {% for activity in activityList %}
+        {% if activity.maxNumber > activity.memberNumber %}
+        <form action="/attend/" method="post" style="text-align: center;">
+            <div>
+<!--                <tr class="table">-->
+<!--                      <td>社团</td>-->
+<!--                      <td name="id">{{ club.id }}</td>-->
+<!--                </tr>-->
+                <input type="hidden" value="{{activity.id}}" name="activityID"/>
+                <label>活动名</label><input type="text" value="{{activity.name}}" style="width: 100px" readonly/>
+                <label>活动地点</label><input type="text" value="{{activity.location}}" style="width: 150px" readonly/>
+                <label>活动时间</label><input type="text" value="{{activity.dateTime}}" readonly/>
+                <label>活动人数</label><input type="number" value="{{activity.memberNumber}}" style="width: 50px" readonly/>
+                <label>最多人数</label><input type="number" value="{{activity.maxNumber}}" style="width: 50px" readonly/>
+                <button type="submit" class="btn btn-primary" >确认</button>
+            </div>
+        </form>
+        {% endif %}
+        {% empty %}
+        <div class="container">
+            无可报名活动
+        </div>
+        {% endfor %}
+    </div>
+        <!--nr end-->
+    <div class="foot"></div>
+</div>
+
+
+
+{% endblock content %}
+

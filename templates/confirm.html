@@ -1,0 +1,48 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load static %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+确认社团申请
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<div class="container"  xmlns="http://www.w3.org/1999/html">
+    <div class="row">
+        <p class="col-12 mt-4 mb-4">
+            <a>用户：{{ member.name }}</a>
+        </p>
+    </div>
+    <div class="container">
+        {% for join in joinList %}
+        <form action="/confirm/" method="post">
+            <div>
+<!--                <tr class="table">-->
+<!--                      <td>社团</td>-->
+<!--                      <td name="id">{{ club.id }}</td>-->
+<!--                </tr>-->
+                <label>职工号</label><input type="text"  value="{{join.member.id}}" name="member" readonly>
+                <input type="hidden" value="{{join.club.id}}" name="club">
+                <label>姓名</label><input type="text" value="{{join.member.name}}" readonly>
+                <label>申请时间</label><input type="text" value="{{join.attendDate}}" readonly>
+                <button type="submit" class="btn btn-primary" >确认</button>
+                <button type="submit" class="btn btn-primary" formaction="/cancel/" formmethod="post">取消</button>
+            </div>
+        </form>
+        {% empty %}
+        <div class="container">
+            无未确认报名
+        </div>
+        {% endfor %}
+    </div>
+        <!--nr end-->
+    <div class="foot"></div>
+</div>
+
+
+
+{% endblock content %}
+

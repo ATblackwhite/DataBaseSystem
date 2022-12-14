@@ -1,0 +1,49 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load static %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+加入社团
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<div class="container" ><!--xmlns="http://www.w3.org/1999/html" >-->
+    <div class="row">
+        <p class="col-12 mt-4 mb-4">
+            <a>用户：{{ member.name }}</a>
+        </p>
+    </div>
+    <div class="container">
+        {% for club in clubList %}
+        <form action="/join/" method="post">
+            <div class="row">
+<!--                <tr class="table">-->
+<!--                      <td>社团</td>-->
+<!--                      <td name="id">{{ club.id }}</td>-->
+<!--                </tr>-->
+                <label>社团ID</label><input type="text"  value="{{club.id}}" name="id" readonly>
+                <label>社团名</label><input type="text" value="{{club.name}}" readonly>
+                <label>负责人</label><input type="text" value="{{club.principal.name}}" readonly>
+                <button type="submit" class="btn btn-primary" >报名</button>
+            </div>
+            <div class="container">
+
+            </div>
+        </form>
+        {% empty %}
+        <div class="container">
+            无可加入社团
+        </div>
+        {% endfor %}
+    </div>
+        <!--nr end-->
+    <div class="foot"></div>
+</div>
+
+
+
+{% endblock content %}
+

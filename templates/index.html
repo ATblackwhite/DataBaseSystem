@@ -1,0 +1,117 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load static %}
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+首页
+{% endblock title %}
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+<div class="container">
+    <div class="container">
+        <br>
+        {% if member.level == 'normal' %}
+        <h3>活动信息</h3>
+        <div class="container">
+            <div class="row mt-4">
+                {% for activity in activityList %}
+                <!-- 文章内容 -->
+                <div class="col-6 mb-6">
+                    <!-- 卡片容器 -->
+                    <div class="card">
+                        <!-- 标题 -->
+                        <h4 class="card-header">{{ activity.name }}</h4>
+                        <!-- 摘要 -->
+                        <div class="card-body">
+                            <h4 class="card-title">{{ activity.club.name }}</h4>
+                            <p class="card-text">{{ activity.location  }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-6 mb-6">
+                    无已加入活动
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <p></p>
+        <h3>社团信息</h3>
+        <div class="container">
+            <div class="row mt-4">
+                {% for club in clubList %}
+                <!-- 文章内容 -->
+                <div class="col-6 mb-6">
+                    <!-- 卡片容器 -->
+                    <div class="card">
+                        <!-- 标题 -->
+                        <h4 class="card-header">{{ club.name }}</h4>
+                        <!-- 摘要 -->
+                        <div class="card-body">
+                            <h4 class="card-title">{{ club.principal.name }}</h4>
+                            <p class="card-text">{{ club.id  }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-6 mb-6">
+                    无已加入社团
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% elif member.level == 'principal' %}
+        <h3>社团成员</h3>
+        <div class="container">
+            <div class="row mt-4">
+                {% for member in memberList %}
+                <!-- 文章内容 -->
+                <div class="col-6 mb-6">
+                    <!-- 卡片容器 -->
+                    <div class="card">
+                        <!-- 标题 -->
+                        <h4 class="card-header">{{ member.name }}</h4>
+                        <!-- 摘要 -->
+                        <div class="card-body">
+                            <h4 class="card-title">{{ member.id }}</h4>
+                            <p class="card-text">{{ member.age  }}岁</p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-6 mb-6">
+                    暂无成员
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <p></p>
+        <h3>活动信息</h3>
+        <div class="container">
+            <div class="row mt-4">
+                {% for activity in activityList %}
+                <!-- 文章内容 -->
+                <div class="col-6 mb-6">
+                    <!-- 卡片容器 -->
+                    <div class="card">
+                        <!-- 标题 -->
+                        <h4 class="card-header">{{ activity.name }}</h4>
+                        <!-- 摘要 -->
+                        <div class="card-body">
+                            <h4 class="card-title">{{ activity.id }}</h4>
+                            <p class="card-text">{{ club.location  }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-6 mb-6">
+                    无活动
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+

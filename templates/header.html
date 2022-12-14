@@ -1,0 +1,42 @@
+<!-- 定义导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <!-- 导航栏商标 -->
+        <a class="navbar-brand" href="#">职工社团管理系统</a>
+        <!-- 导航入口 -->
+        <div>
+            <ul class="navbar-nav">
+                <!-- Django的 if 模板语句 -->
+                {% if request.session.is_login %}
+                <!-- 如果用户已经登录，则显示用户名下拉框 -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ request.session.username }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if member.level == 'normal' %} <!-- 如果是普通社员 -->
+                        <a class="dropdown-item" href="/join/">参加社团</a>
+                        <a class="dropdown-item" href="/attend/">参加活动</a>
+                        {% elif member.level == 'principal' %}
+                        <a class="dropdown-item" href="/confirm/">确认申请</a>
+                        <a class="dropdown-item" href="/publish/">组织活动</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="/logout/">退出登录</a>
+                    </div>
+                </li>
+                <!-- 如果用户未登录，则显示 “登录” -->
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login/">登录</a>
+                </li>
+                <!-- if 语句在这里结束 -->
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">管理员</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+

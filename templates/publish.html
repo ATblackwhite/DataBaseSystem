@@ -1,0 +1,41 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load static %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+确认社团申请
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<div class="container"  xmlns="http://www.w3.org/1999/html">
+    <div class="row">
+        <p class="col-12 mt-4 mb-4">
+            <a>用户：{{ member.name }}</a>
+        </p>
+    </div>
+    <div class="container">
+        <form action="/publish/" method="post" style="text-align: center;">
+            <div class="row">
+<!--                <tr class="table">-->
+<!--                      <td>社团</td>-->
+<!--                      <td name="id">{{ club.id }}</td>-->
+<!--                </tr>-->
+                <label>活动名</label><input type="text" name="name"/><br/>
+                <label>活动地点</label><input type="text" name="location"/><br/>
+                <label>活动时间</label><input type="datetime-local" name="dateTime"/><br/>
+                <label>活动人数</label><input type="number" name="maxNumber"/><br/>
+                <button type="submit" class="btn btn-primary" >确认</button>
+            </div>
+        </form>
+    </div>
+        <!--nr end-->
+    <div class="foot"></div>
+</div>
+
+
+
+{% endblock content %}
+
