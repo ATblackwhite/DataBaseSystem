@@ -24,10 +24,10 @@
 <!--                      <td>社团</td>-->
 <!--                      <td name="id">{{ club.id }}</td>-->
 <!--                </tr>-->
-                <label>职工号</label><input type="text"  value="{{join.member.id}}" name="member" readonly>
+                <label>职工号：</label><input type="text"  value="{{join.member.id}}" name="member" readonly>
                 <input type="hidden" value="{{join.club.id}}" name="club">
-                <label>姓名</label><input type="text" value="{{join.member.name}}" readonly>
-                <label>申请时间</label><input type="text" value="{{join.attendDate}}" readonly>
+                <label>姓名：</label><input type="text" value="{{join.member.name}}" readonly>
+                <label>申请时间：</label><input type="text" value="{{join.attendDate}}" readonly>
                 <button type="submit" class="btn btn-primary" >确认</button>
                 <button type="submit" class="btn btn-primary" formaction="/cancel/" formmethod="post">取消</button>
             </div>

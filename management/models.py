@@ -7,7 +7,7 @@ class Member(models.Model):
     age = models.IntegerField(blank=True)
     sex = models.CharField(max_length=5, choices=[('1', 'boy'), ('2', 'girl')])
     passwd = models.CharField(max_length=20, default=None)
-    level = models.CharField(max_length=10, choices=[('1', 'normal'), ('2', 'principal'), ('3', 'admin')])
+    level = models.CharField(max_length=10, choices=[('1', 'normal'), ('2', 'principal')])
 
 
 class Club(models.Model):

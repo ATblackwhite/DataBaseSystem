@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from management import views
-
+from django.conf.urls.static import static
+from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('management/', include('management.urls')),
@@ -27,5 +28,7 @@ urlpatterns = [
     path('confirm/', views.confirm, name='confirm'),
     path('cancel/', views.cancel),
     path('publish/', views.publish, name='publish'),
-    path('attend/', views.attend, name='attend')
-]
+    path('attend/', views.attend, name='attend'),
+    
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
